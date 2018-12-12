@@ -1,0 +1,30 @@
+<div ngxDroppable="tree-view-zone" [model]='items'>
+    <div
+    ngxDraggable
+    [model]="item" *ngFor="let item of items" >
+    <ng-template [ngIf]="item.children.length>0" [ngIfElse]="simpleItem">
+        <div class="nested" class="ngx-dnd-item">
+            <span>{{ item.label }}</span>
+            <div ngxDroppable="tree-view-zone" class="ngx-droppable-container"
+            (drop)="drop($event)" [model]="item.children">
+                <div ngxDraggable
+                [model]="childItem"
+                *ngFor="let childItem of item.children" class="item drag-box">
+                  {{ childItem.label }}
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+    <ng-template #simpleItem>
+        <div ngxDraggable class="item drag-box-simple">
+        <div class="ngx-droppable-simple-text">{{ item.label }}</div>
+        <div ngxDroppable="tree-view-zone" class="ngx-droppable-simple" [model]="item.children">
+
+        </div>
+        </div>
+    </ng-template>
+
+      </div>
+</div>
+<div>{{ items | json}}</div>
